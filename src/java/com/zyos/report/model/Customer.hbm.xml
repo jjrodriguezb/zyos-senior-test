@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 21, 2020 2:29:44 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.zyos.report.model.Customer" table="customer" schema="public" optimistic-lock="version">
+        <id name="customerId" type="int">
+            <column name="customer_id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="address" class="com.zyos.report.model.Address" fetch="select">
+            <column name="address_id" not-null="true" />
+        </many-to-one>
+        <property name="storeId" type="short">
+            <column name="store_id" not-null="true" />
+        </property>
+        <property name="firstName" type="string">
+            <column name="first_name" length="45" not-null="true" />
+        </property>
+        <property name="lastName" type="string">
+            <column name="last_name" length="45" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="50" />
+        </property>
+        <property name="activebool" type="boolean">
+            <column name="activebool" not-null="true" />
+        </property>
+        <property name="createDate" type="date">
+            <column name="create_date" length="13" not-null="true" />
+        </property>
+        <property name="lastUpdate" type="timestamp">
+            <column name="last_update" length="29" />
+        </property>
+        <property name="active" type="java.lang.Integer">
+            <column name="active" />
+        </property>
+        <set name="rentals" table="rental" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="customer_id" not-null="true" />
+            </key>
+            <one-to-many class="com.zyos.report.model.Rental" />
+        </set>
+        <set name="payments" table="payment" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="customer_id" not-null="true" />
+            </key>
+            <one-to-many class="com.zyos.report.model.Payment" />
+        </set>
+    </class>
+</hibernate-mapping>
